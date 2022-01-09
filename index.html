@@ -233,17 +233,11 @@
 
 <script src="layout.js" type="text/javascript"></script>
 <script>
-  const socket = new WebSocket("ws://" + location.host + "/echo");
-  socket.addEventListener("message", function (event) {
-    console.log("Message from server ", event.data);
-    const obj = JSON.parse(event.data);
-    console.log("Message from server ", obj);
-  });
   // variables used to get mouse position on the canvas
   var $canvas = $("#zplane_polezero2");
   var canvasOffset = $canvas.offset();
   var offsetX = canvasOffset.left;
-  var offsetY = canvasOffset.top;
+  var offsetY = canvasOffset.top; 
   var scrollX = $canvas.scrollLeft();
   var scrollY = $canvas.scrollTop();
 
@@ -306,6 +300,7 @@ reader.onload = function (e) {
 };
 reader.readAsText(input);
 });
+
   function addNewPole() {
     // console.log("I'm here!");
     points = document.getElementById("poles");
@@ -393,19 +388,6 @@ reader.readAsText(input);
     polesNum = 0;
     zerosNum = 0;
     setZplane(poles, zeros);
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
-    let p = JSON.stringify({
-      type: "poles",
-      value: poles,
-    });
-    socket.send(p);
-
-    let z = JSON.stringify({
-      type: "zeros",
-      value: zeros,
-    });
-    socket.send(z);
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
   }
   function clearZeros() {
     zeros = [];
@@ -503,19 +485,6 @@ reader.readAsText(input);
       poles[selectedPoint][1] += dy;
     }
     setZplane(poles, zeros);
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
-    let p = JSON.stringify({
-      type: "poles",
-      value: poles,
-    });
-    socket.send(p);
-
-    let z = JSON.stringify({
-      type: "zeros",
-      value: zeros,
-    });
-    socket.send(z);
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
   }
 
   // done dragging
@@ -551,19 +520,6 @@ reader.readAsText(input);
       }
     }
     setZplane(poles, zeros);
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
-    let p = JSON.stringify({
-      type: "poles",
-      value: poles,
-    });
-    socket.send(p);
-
-    let z = JSON.stringify({
-      type: "zeros",
-      value: zeros,
-    });
-    socket.send(z);
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
   }
 
   // listen for mouse events
